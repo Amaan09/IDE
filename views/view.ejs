@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <title>IDE</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.4/ace.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fas fa-code"></i> Code Editor</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/editor" target="_blank">Try it <i class="fas fa-question"></i><span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+<div class="container">
+    <h1 class="display-4 text-center"><%= editor.filename %></h1>
+    <table class="table table-hover table-bordered table-striped table-dark">
+        <tbody>
+            <tr>
+                <td><button class="copy-btn btn btn-outline-warning btn-sm">Copy HTML</button></td>
+                <td> <%= editor.html %> </td>
+            </tr>
+            <tr>
+                <td><button class="copy-btn btn btn-outline-warning btn-sm">Copy CSS</button></td>
+                <td> <%= editor.css %> </td>
+            </tr>
+            <tr>
+                <td><button class="copy-btn btn btn-outline-warning btn-sm">Copy JS</button></td>
+                <td> <%= editor.js %> </td>
+            </tr>
+        </tbody>
+    </table>
+    <form id="delete" action="/editor/<%= editor._id %>?_method=DELETE" method="POST">
+        <button type="submit" class="btn btn-danger">Delete Code</button>
+    </form>
+</div>
+<script>
+    $(".copy-btn").click(function () {
+            let tmpElement = $('<textarea style="opacity:0;"></textarea>');
+            let parent = $(this).closest('td').siblings().each(function () {
+                tmpElement.text(tmpElement.text() + $(this).text() + '\t');
+            });
+
+            tmpElement.appendTo($('body')).focus().select();
+            document.execCommand("copy");
+            tmpElement.remove();
+        });
+</script>
+    </body>
+</html>
