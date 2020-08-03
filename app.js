@@ -10,8 +10,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb+srv://root:1234@restaurant-olrx5.mongodb.net/IDE?retryWrites=true&w=majority");
-// mongoose.connect("mongodb://localhost:27017/ide", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/ide", { useNewUrlParser: true });
 
 var editorRoutes = require("./editor/editorController");
 app.use("/editor", editorRoutes);
